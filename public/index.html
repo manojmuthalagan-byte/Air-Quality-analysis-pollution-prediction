@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7f4">
+  <meta name="description" content="An academic dashboard for transparent air-quality analysis, CPCB-style AQI estimates, data quality, and next-day baseline forecasting.">
+  <title>Air Quality Analysis &amp; Pollution Prediction</title>
+  <link rel="icon" type="image/svg+xml" href="/mark.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to dashboard</a>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#overview" aria-label="Airscope dashboard home">
+        <img src="/mark.svg" alt="" width="35" height="35">
+        <span><strong>airscope</strong><small>ENVIRONMENTAL LAB</small></span>
+      </a>
+      <div class="side-section-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Dashboard sections">
+        <a class="nav-link active" href="#overview"><span class="nav-icon">◫</span>Overview<span class="nav-indicator"></span></a>
+        <a class="nav-link" href="#explore"><span class="nav-icon">⌁</span>Explore data</a>
+        <a class="nav-link" href="#forecast"><span class="nav-icon">↗</span>Forecast</a>
+        <a class="nav-link" href="#models"><span class="nav-icon">▤</span>Model results</a>
+        <a class="nav-link" href="#method"><span class="nav-icon">ⓘ</span>Methodology</a>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-project">
+        <div class="project-dot"></div>
+        <div><small>ACADEMIC PROJECT</small><strong>Air quality study</strong></div>
+        <span class="project-menu" aria-hidden="true">···</span>
+      </div>
+      <div class="side-footnote">A learning tool, not an official monitoring service.</div>
+    </aside>
+
+    <main id="main-content" class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu icon-button" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+        <div class="breadcrumb"><span>WORKSPACE</span><i>/</i><strong>Air quality overview</strong></div>
+        <div class="top-actions">
+          <span class="source-pill"><span class="source-dot"></span><span id="sourcePillText">ILLUSTRATIVE DEMO</span></span>
+          <button class="button button-quiet" id="printButton" type="button"><span>↗</span> Export summary</button>
+          <button class="button button-dark" id="uploadButton" type="button"><span>＋</span> Upload data</button>
+        </div>
+      </header>
+
+      <div class="page-wrap">
+        <section id="overview" class="overview-section">
+          <div class="intro-row">
+            <div>
+              <div class="eyebrow"><span class="eyebrow-line"></span> AIR QUALITY / ANALYSIS</div>
+              <h1>See the air.<br><em>Understand what comes next.</em></h1>
+              <p class="intro-copy">A transparent workspace for exploring pollutants, calculating CPCB-style AQI estimates, and checking what the data can—and cannot—say.</p>
+            </div>
+            <div class="intro-meta">
+              <div class="meta-label">DATA WINDOW</div>
+              <div class="meta-value" id="coverageText">—</div>
+              <div class="meta-sub" id="datasetDescription">Synthetic example · no city or station</div>
+              <div class="demo-tag"><span class="tiny-spark">✳</span><span id="datasetBadge">DEMO DATA · ILLUSTRATIVE ONLY</span></div>
+            </div>
+          </div>
+
+          <div class="hero-grid">
+            <article class="aqi-card panel">
+              <div class="card-topline"><span class="section-index">01 / CURRENT SNAPSHOT</span><span class="status-chip"><span></span> Derived from selected data</span></div>
+              <div class="aqi-card-body">
+                <div class="aqi-reading">
+                  <div class="reading-overline">LATEST DAILY AQI</div>
+                  <div class="reading-value" id="currentAqi">—</div>
+                  <div class="reading-category" id="currentCategory">Waiting for readings</div>
+                  <p id="healthContext" class="health-context">Upload observations or explore the illustrative dataset.</p>
+                  <div class="reading-date" id="latestDate">—</div>
+                </div>
+                <div class="aqi-gauge" id="aqiGauge" role="img" aria-label="Latest AQI gauge">
+                  <div class="gauge-inner"><span class="gauge-number" id="gaugeValue">—</span><span class="gauge-caption">AQI</span></div>
+                </div>
+              </div>
+              <div class="aqi-footnote"><span class="info-dot">i</span><span>Worst available pollutant sub-index · row-wise estimate, not a certified station AQI.</span></div>
+            </article>
+
+            <article class="context-card panel">
+              <div class="context-icon" aria-hidden="true"><span>◌</span></div>
+              <div class="section-index">READ THE SIGNAL</div>
+              <h2 id="signalTitle">A number is only the beginning.</h2>
+              <p id="signalCopy">Add a dataset to see how measured pollutants translate into a category. Every estimate keeps its source and limitations visible.</p>
+              <a href="#method" class="text-link">How AQI is calculated <span>→</span></a>
+              <div class="context-rule"></div>
+              <div class="context-source"><span class="mini-icon">▧</span><span>METHOD REFERENCE</span><a href="https://www.pib.gov.in/newsite/printrelease.aspx?relid=110654" target="_blank" rel="noreferrer">National AQI · 2014 ↗</a></div>
+            </article>
+          </div>
+
+          <div class="stat-strip" aria-label="Selected dataset summary">
+            <div class="stat-item"><span class="stat-label">RECORDS</span><strong id="recordCount">—</strong><small id="recordSub">available samples</small></div>
+            <div class="stat-item"><span class="stat-label">DATA COMPLETENESS</span><strong id="completenessValue">—</strong><small id="missingSub">across mapped fields</small></div>
+            <div class="stat-item"><span class="stat-label">MEASURED VARIABLES</span><strong id="variableCount">—</strong><small>pollutants &amp; weather</small></div>
+            <div class="stat-item"><span class="stat-label">SAMPLING GAPS</span><strong id="gapCount">—</strong><small>unusually long intervals</small></div>
+          </div>
+        </section>
+
+        <section class="content-section" aria-labelledby="trendHeading">
+          <div class="section-heading">
+            <div><div class="eyebrow"><span class="eyebrow-line"></span> OBSERVATIONS</div><h2 id="trendHeading">Follow the pattern.</h2><p>Daily values reveal how air quality moves over time.</p></div>
+            <div class="chart-controls"><label class="sr-only" for="trendVariable">Choose chart variable</label><select id="trendVariable" class="select-control"></select><label class="sr-only" for="seasonalityMode">Choose trend or seasonality view</label><select id="seasonalityMode" class="select-control season-select"><option value="daily">Daily trend</option><option value="weekday">Weekday mean</option><option value="month">Monthly mean</option></select><div class="range-tabs" role="group" aria-label="Time range"><button type="button" data-range="30" class="active">30D</button><button type="button" data-range="90">90D</button><button type="button" data-range="all">ALL</button></div></div>
+          </div>
+          <article class="panel chart-panel" id="explore">
+            <div class="chart-header"><div><div class="chart-title" id="trendTitle">Daily AQI</div><div class="chart-subtitle" id="trendSubtitle">Daily aggregate · selected dataset</div></div><div class="chart-legend"><span class="legend-line"></span><span id="trendUnit">AQI index</span></div></div>
+            <div class="chart-canvas" id="trendChart" aria-live="polite"></div>
+            <details class="chart-data"><summary>View plotted values in an accessible table</summary><div id="trendDataTable"></div></details>
+            <div class="chart-axis-note"><span id="trendMinDate">—</span><span id="trendModeNote">DAILY AGGREGATE · NO SMOOTHING</span><span id="trendMaxDate">—</span></div>
+          </article>
+        </section>
+
+        <section class="content-section pollutant-section" aria-labelledby="pollutantsHeading">
+          <div class="section-heading compact-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> POLLUTANT PROFILE</div><h2 id="pollutantsHeading">Eight signals. One shared atmosphere.</h2><p>Latest available concentration and its CPCB-style sub-index.</p></div><a href="#method" class="text-link muted-link">View breakpoint method <span>→</span></a></div>
+          <div class="pollutant-grid" id="pollutantGrid"></div>
+        </section>
+
+        <section class="content-section analysis-grid" aria-labelledby="qualityHeading">
+          <article class="panel quality-panel">
+            <div class="panel-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> DATA INTEGRITY</div><h2 id="qualityHeading">Trust the inputs.</h2><p>Checks computed from the loaded file.</p></div><span class="quality-seal" aria-hidden="true">✓</span></div>
+            <div class="quality-meter"><div class="meter-label"><span>FIELD COMPLETENESS</span><strong id="qualityPercent">—</strong></div><div class="meter-track"><span id="qualityBar"></span></div></div>
+            <div class="quality-list" id="qualityList"></div>
+            <p class="small-disclosure" id="qualityDisclosure">Completeness is computed only for fields present in the selected dataset.</p>
+          </article>
+          <article class="panel correlation-panel">
+            <div class="panel-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> EXPLORATORY ANALYSIS</div><h2>What moves together?</h2><p>Select a cell to chart its row variable · Pearson correlation.</p></div><span class="correlation-mark" aria-hidden="true">r</span></div>
+            <div class="heatmap-wrap" id="correlationMatrix"></div>
+            <div class="heatmap-legend"><span>−1 inverse</span><span class="legend-gradient"></span><span>+1 aligned</span></div>
+            <p class="small-disclosure">Wind direction is represented by sine/cosine transforms for linear correlation. Correlation describes association in this dataset; it does not establish causation.</p>
+          </article>
+        </section>
+
+        <section id="forecast" class="content-section forecast-section">
+          <div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> NEAR-TERM OUTLOOK</div><h2>Look one day ahead—with care.</h2><p>A transparent baseline, not a trained machine-learning model.</p></div><span class="baseline-tag"><span>↗</span> 7-DAY MEAN BASELINE</span></div>
+          <article class="forecast-card panel">
+            <div class="forecast-main">
+              <div class="forecast-label">NEXT-DAY AQI ESTIMATE <span id="forecastTargetDate">—</span></div>
+              <div class="forecast-value-row"><strong id="forecastValue">—</strong><div><span id="forecastCategory" class="forecast-category">Forecast unavailable</span><small id="forecastRange">—</small></div></div>
+              <div class="forecast-range-track"><div id="forecastBand" class="forecast-band"></div><span id="forecastMarker" class="forecast-marker"></span></div>
+              <div class="range-endpoints"><span>0 · GOOD</span><span>500 · SEVERE</span></div>
+            </div>
+            <div class="forecast-notes"><div class="note-icon">i</div><div><strong id="forecastStatus">Forecast status</strong><p id="forecastExplanation">A forecast appears only when the latest 7 calendar days have valid AQI estimates and consecutive daily coverage.</p><p class="forecast-caveat">Baseline uses AQI history only. It does not use weather inputs or a trained model; the range is descriptive, not a calibrated confidence interval.</p></div></div>
+          </article>
+        </section>
+
+        <section id="models" class="content-section model-section">
+          <div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> MODEL EVALUATION</div><h2>Results belong to the data.</h2><p>No model scores have been supplied or computed for this project yet.</p></div><span class="unverified-tag">RESULTS PENDING</span></div>
+          <article class="panel model-panel">
+            <div class="model-table-wrap"><table class="model-table"><thead><tr><th>MODEL</th><th>TYPE</th><th>MAE <span>↓</span></th><th>RMSE <span>↓</span></th><th>R² <span>↑</span></th><th>STATUS</th></tr></thead><tbody id="modelTableBody"></tbody></table></div>
+            <div class="model-foot"><div class="metric-notes"><span><strong>MAE</strong> average absolute error</span><span><strong>RMSE</strong> emphasizes larger misses</span><span><strong>R²</strong> variance explained</span></div><p>Compare models using a time-ordered split: train on earlier dates and test on later dates. Never shuffle time-series rows.</p></div>
+          </article>
+        </section>
+
+        <section id="method" class="content-section method-section">
+          <div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> METHOD &amp; LIMITATIONS</div><h2>Make the assumptions visible.</h2><p>A project workspace—not an official CPCB reading or public-health advisory.</p></div></div>
+          <div class="method-grid">
+            <article class="panel method-card"><div class="method-step">01 <span>THE INDEX</span></div><h3>How an AQI estimate is formed</h3><p>Each available concentration is mapped to its published breakpoint range. The sub-index uses linear interpolation, and the largest available pollutant sub-index is shown as the overall estimate.</p><div class="formula">I = (I<sub>hi</sub> − I<sub>lo</sub>) / (BP<sub>hi</sub> − BP<sub>lo</sub>) × (C − BP<sub>lo</sub>) + I<sub>lo</sub></div><p class="small-disclosure">The 2014 source publishes open-ended Severe concentration bands. This app reports 401+ as a lower bound there because no finite upper concentration breakpoint is published in that table.</p><a class="source-link" href="https://www.pib.gov.in/newsite/printrelease.aspx?relid=110654" target="_blank" rel="noreferrer">Government of India · National AQI launch table ↗</a></article>
+            <article class="panel method-card"><div class="method-step">02 <span>THE PIPELINE</span></div><h3>From rows to a readable signal</h3><div class="pipeline-list"><div><b>Collect</b><span>Pollutants, weather, timestamps, and station context.</span></div><div><b>Clean</b><span>Map columns; disclose missing, invalid, duplicate, and irregular readings.</span></div><div><b>Explore</b><span>Compare trends, seasonal patterns, and pairwise correlations.</span></div><div><b>Evaluate</b><span>Use a chronological holdout and report MAE, RMSE, and R².</span></div></div></article>
+            <article class="panel method-card limitations-card"><div class="method-step">03 <span>WHAT TO KEEP IN MIND</span></div><h3>Limits are part of the result</h3><ul><li>Sensor gaps and inconsistent sampling can distort trends.</li><li>Fire, festival, traffic, and weather events can change rapidly.</li><li>Hourly uploads are averaged by calendar day here; verify official averaging windows (24 hours for most pollutants, 8 hours for CO and O₃).</li><li>Wind direction uses circular means and sine/cosine correlation transforms, not linear degrees.</li><li>Duplicate checks find exact timestamps only; same-day repeats and station identity need dataset-specific review.</li><li>A model trained in one place may not transfer to another.</li><li>The demo series is synthetic and has no real city or station provenance.</li></ul><a class="source-link" href="https://airquality.cpcb.gov.in/AQI_India/" target="_blank" rel="noreferrer">CPCB National AQI portal ↗</a></article>
+          </div>
+          <div class="project-placeholders"><div><span>DATASET</span><strong>Not supplied</strong></div><div><span>CITY / STATION</span><strong>Not supplied</strong></div><div><span>TIME PERIOD</span><strong>Not supplied</strong></div><div><span>RECORD COUNT</span><strong id="projectRecordPlaceholder">—</strong></div><div><span>BEST MODEL</span><strong>Not evaluated</strong></div><div><span>KEY FINDING</span><strong>Not established</strong></div></div>
+        </section>
+
+        <section class="content-section upload-section" aria-labelledby="uploadHeading">
+          <div class="upload-strip" id="uploadDropzone">
+            <div class="upload-symbol" aria-hidden="true">↑</div><div><div class="eyebrow"><span class="eyebrow-line"></span> YOUR DATA, YOUR CONTEXT</div><h2 id="uploadHeading">Bring your observations in.</h2><p>CSV files stay in this browser session. Map your columns before analysis; no file is sent to a server.</p></div><button class="button button-dark" id="uploadButtonBottom" type="button">Choose a CSV <span>→</span></button>
+            <input id="csvFile" type="file" accept=".csv,text/csv" hidden>
+          </div>
+        </section>
+
+        <footer class="page-footer"><div><img src="/mark.svg" alt="" width="22" height="22"><span>airscope <small>ACADEMIC AIR QUALITY LAB</small></span></div><p>Educational analysis only · Not an official monitoring service or health advisory.</p><a href="https://cpcb.nic.in/National-Air-Quality-Index/" target="_blank" rel="noreferrer">CPCB reference ↗</a></footer>
+      </div>
+    </main>
+  </div>
+
+  <dialog class="mapping-dialog" id="mappingDialog" aria-labelledby="mappingTitle">
+    <form method="dialog" class="dialog-close-wrap"><button class="dialog-close" aria-label="Close mapping dialog">×</button></form>
+    <div class="eyebrow"><span class="eyebrow-line"></span> DATA IMPORT</div><h2 id="mappingTitle">Map the columns.</h2><p class="dialog-intro">Choose the column that matches each field. A valid date/timestamp and at least one pollutant are needed to calculate an AQI estimate.</p>
+    <div class="mapping-summary" id="mappingSummary"></div>
+    <div class="mapping-fields" id="mappingFields"></div>
+    <div class="dialog-error" id="mappingError" role="alert"></div>
+    <div class="dialog-actions"><button type="button" class="button button-quiet" id="cancelMapping">Cancel</button><button type="button" class="button button-dark" id="applyMapping">Use this dataset <span>→</span></button></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript-message">Enable JavaScript to explore this interactive analysis dashboard.</p></noscript>
+</body>
+</html>
